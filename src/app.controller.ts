@@ -1,6 +1,7 @@
 import { Controller, Get, Param, Render } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Query } from '@nestjs/common';
+import { Quotes } from './quotes'
 
 @Controller()
 export class AppController {
@@ -12,6 +13,20 @@ export class AppController {
     return {
       message: this.appService.getHello()
     };
+  }
+
+  @Get('quotes')
+  @Render('quoteslist')
+  quoteslist(){
+    return {Quotes: Quotes.quotes}
+  }
+
+  @Get('randomQuote')
+  @Render('randomQuote')
+  randomQuote(){
+    const randomIndex = Math.floor(Math.random() * Quotes.quotes.length);
+    const randomQuote = Quotes.quotes[randomIndex];
+    return { quote: randomQuote };
   }
 
   @Get('hatterszin')
